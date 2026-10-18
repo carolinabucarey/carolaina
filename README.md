@@ -41,16 +41,9 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
 - a la ganadora: confirmación con el monto;
 - a la admin (`ADMIN_EMAIL`): cada adjudicación y cada vez que una prenda alcanza el mínimo (momento de subir la historia de «últimas 24 h»).
 
-Prográmalo desde Supabase cada 5 minutos (reemplaza la URL y el secreto):
+Lo llama **Vercel Cron** cada 5 minutos (`vercel.json`). Vercel envía `Authorization: Bearer CRON_SECRET` automáticamente cuando la variable `CRON_SECRET` existe en el proyecto, así que no hay que configurar nada más. Para probarlo al instante: Vercel → proyecto → *Settings → Cron Jobs → Run*.
 
-```sql
-select cron.schedule('notificar', '*/5 * * * *', $$
-  select net.http_get(
-    url := 'https://TU-SITIO/api/cron/notificar',
-    headers := jsonb_build_object('Authorization', 'Bearer TU_CRON_SECRET')
-  );
-$$);
-```
+Los correos salen por Resend desde el dominio verificado `luxeskin.cl` (`CORREO_REMITENTE`). Los enlaces de acceso de Supabase también usan Resend como SMTP (*Authentication → Emails → SMTP Settings*: `smtp.resend.com`, puerto 465, usuario `resend`, contraseña = API key).
 
 ## Catálogo desde Instagram
 
