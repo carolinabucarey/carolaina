@@ -9,7 +9,7 @@ export default function FotosEditables({ id, fotos }: { id: string; fotos: strin
     <div className="grid grid-cols-4 gap-3">
       {fotos.map((f, i) => (
         <div key={f} className="relative">
-          <Foto src={f} alt={`Foto ${i + 1}`} className="aspect-square w-full rounded-xl" />
+          <Foto src={f} alt={`Foto ${i + 1}`} className="aspect-square w-full rounded-xl" sizes="200px" />
           <button
             type="button"
             disabled={pendiente}

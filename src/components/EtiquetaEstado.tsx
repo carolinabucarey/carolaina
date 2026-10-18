@@ -7,7 +7,7 @@ const ESTILO: Record<EstadoArticulo, string> = {
   cuenta_regresiva: "bg-rosa text-white",
   adjudicado: "bg-tinta text-crema",
   vendido_directo: "bg-tinta text-crema",
-  retirado: "bg-arena text-cafe/70",
+  retirado: "bg-arena text-cafe/90",
 };
 
 export default function EtiquetaEstado({ estado }: { estado: EstadoArticulo }) {

@@ -12,7 +12,7 @@ export default function Terminos() {
   return (
     <article className="texto-legal">
       <h1>Términos y condiciones</h1>
-      <p className="text-sm text-cafe/70">
+      <p className="text-sm text-cafe/90">
         Versión {VERSION_LEGAL.version} · Vigente desde el {VERSION_LEGAL.vigencia}
       </p>
 

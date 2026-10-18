@@ -86,22 +86,22 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
     <div className="space-y-4 rounded-3xl bg-white p-6 ring-1 ring-arena">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs text-cafe/60">{sinOfertas ? "Oferta mínima" : abierta ? "Oferta actual" : "Precio final"}</p>
+          <p className="text-xs text-cafe/90">{sinOfertas ? "Oferta mínima" : abierta ? "Oferta actual" : "Precio final"}</p>
           <p className="text-3xl font-semibold">
             {pesos(sinOfertas ? a.precio_minimo : abierta ? a.oferta_actual : a.monto_final)}
           </p>
-          <p className="text-xs text-cafe/60">{sinOfertas ? "Aún sin ofertas" : `${a.total_ofertas} ofertas`}</p>
+          <p className="text-xs text-cafe/90">{sinOfertas ? "Aún sin ofertas" : `${a.total_ofertas} ofertas`}</p>
         </div>
         {estado === "cuenta_regresiva" && a.cierre_at && (
           <div className="text-right">
-            <p className="text-xs text-cafe/60">Cierra en</p>
+            <p className="text-xs text-cafe/90">Cierra en</p>
             <CuentaRegresiva cierre={a.cierre_at} alTerminar={alTerminar} className="font-mono text-2xl text-rosa" />
           </div>
         )}
       </div>
 
       {estado === "activo" && (
-        <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/80">
+        <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/90">
           La primera oferta desde {pesos(piso)} abre 24 horas finales para que otras puedan mejorarla.
         </p>
       )}
@@ -116,7 +116,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
         (usuarioId ? (
           <form onSubmit={ofertar} className="flex gap-2">
             <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-cafe/60">$</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-cafe/90">$</span>
               <input
                 inputMode="numeric"
                 className="campo pl-6"
@@ -157,7 +157,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
       )}
 
       {abierta && usuarioId && (
-        <p className="text-xs text-cafe/60">
+        <p className="text-xs text-cafe/90">
           Tu oferta es un compromiso de compra. Al ofertar o comprar aceptas los{" "}
           <Link href="/terminos" className="underline">
             Términos y condiciones

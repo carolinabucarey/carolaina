@@ -50,7 +50,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
       </div>
 
       {filas.length === 0 ? (
-        <p className="text-sm text-cafe/70">No hay artículos aquí.</p>
+        <p className="text-sm text-cafe/90">No hay artículos aquí.</p>
       ) : (
         <ul className="divide-y divide-arena overflow-hidden rounded-2xl bg-white ring-1 ring-arena">
           {filas.map((a) => {
@@ -58,10 +58,10 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
             return (
               <li key={a.id}>
                 <Link href={`/admin/articulo/${a.id}`} className="flex items-center gap-4 px-4 py-3 hover:bg-crema">
-                  <Foto src={a.fotos[0]} alt={a.titulo} className="h-14 w-12 shrink-0 rounded-lg" />
+                  <Foto src={a.fotos[0]} alt={a.titulo} className="h-14 w-12 shrink-0 rounded-lg" sizes="48px" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-medium">{a.titulo}</p>
-                    <p className="text-xs text-cafe/60">
+                    <p className="text-xs text-cafe/90">
                       Mínimo {pesos(a.articulos_minimo?.precio_minimo)} · Actual {pesos(a.oferta_actual)} · {a.total_ofertas} ofertas
                       {a.cierre_at && ` · cierra ${new Date(a.cierre_at).toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" })}`}
                     </p>

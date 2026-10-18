@@ -42,7 +42,7 @@ function Formulario() {
         </button>
       </form>
       {estado === "error" && <p className="text-sm text-rosa">{error}</p>}
-      <p className="text-center text-xs text-cafe/60">
+      <p className="text-center text-xs text-cafe/90">
         Al ingresar declaras ser mayor de 18 años y aceptas los{" "}
         <Link href="/terminos" className="underline">
           Términos y condiciones
@@ -62,7 +62,7 @@ export default function Ingresar() {
     <div className="mx-auto max-w-sm space-y-6 rounded-3xl bg-white p-8 ring-1 ring-arena">
       <div className="text-center">
         <h1 className="font-serif text-2xl italic text-cafe">Ingresa para ofertar</h1>
-        <p className="mt-1 text-sm text-cafe/70">Sin contraseñas: te enviamos un enlace de acceso.</p>
+        <p className="mt-1 text-sm text-cafe/90">Sin contraseñas: te enviamos un enlace de acceso.</p>
       </div>
       <Suspense>
         <Formulario />

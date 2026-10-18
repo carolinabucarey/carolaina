@@ -32,7 +32,7 @@ export default async function EditarArticulo({
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <Link href="/admin" className="text-sm text-cafe/70 hover:text-rosa">← Volver al panel</Link>
+      <Link href="/admin" className="text-sm text-cafe/90 hover:text-rosa">← Volver al panel</Link>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-serif text-3xl italic text-cafe">{a ? "Editar artículo" : "Nuevo artículo"}</h1>
@@ -104,9 +104,9 @@ export default async function EditarArticulo({
 function Campo({ etiqueta, ayuda, children }: { etiqueta: string; ayuda?: string; children: React.ReactNode }) {
   return (
     <label className="block space-y-1">
-      <span className="text-xs font-medium uppercase tracking-wide text-cafe/70">{etiqueta}</span>
+      <span className="text-xs font-medium uppercase tracking-wide text-cafe/90">{etiqueta}</span>
       {children}
-      {ayuda && <span className="block text-xs text-cafe/50">{ayuda}</span>}
+      {ayuda && <span className="block text-xs text-cafe/90">{ayuda}</span>}
     </label>
   );
 }

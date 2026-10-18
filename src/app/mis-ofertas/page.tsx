@@ -35,7 +35,7 @@ export default async function MisOfertas() {
     <div className="space-y-6">
       <h1 className="font-serif text-3xl italic text-cafe">Mis ofertas</h1>
       {filas.length === 0 ? (
-        <p className="text-sm text-cafe/70">
+        <p className="text-sm text-cafe/90">
           Todavía no ofertas por nada. <Link href="/" className="text-rosa underline">Mira las prendas</Link>.
         </p>
       ) : (
@@ -48,7 +48,7 @@ export default async function MisOfertas() {
               <li key={a.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
                 <div>
                   <Link href={`/articulo/${a.slug}`} className="font-medium hover:text-rosa">{a.titulo}</Link>
-                  <p className="text-xs text-cafe/60">
+                  <p className="text-xs text-cafe/90">
                     Mi oferta {pesos(miMejor)} · Actual {pesos(a.oferta_actual)}
                   </p>
                 </div>

@@ -68,9 +68,12 @@ export default async function Inicio({ searchParams }: Props) {
           priority
           className="mx-auto mb-5 h-32 w-32 drop-shadow-sm sm:h-40 sm:w-40"
         />
-        <p className="text-xs uppercase tracking-[0.25em] text-cafe/70">Ropa de segunda mano seleccionada · precio por ofertas</p>
-        <h1 className="mt-3 font-serif text-3xl italic text-cafe sm:text-5xl">Deja tu oferta, llévate la prenda</h1>
-        <p className="mx-auto mt-4 max-w-xl text-sm text-cafe/80 sm:text-base">
+        <h1 className="text-xs uppercase tracking-[0.25em] text-cafe/90">
+          {categoria ? `${categoria} de segunda mano` : "Ropa de segunda mano seleccionada"}
+          {" · precio por ofertas"}
+        </h1>
+        <p className="mt-3 font-serif text-3xl italic text-cafe sm:text-5xl">Deja tu oferta, llévate la prenda</p>
+        <p className="mx-auto mt-4 max-w-xl text-sm text-cafe/90 sm:text-base">
           Cada prenda tiene una oferta mínima. La primera oferta abre 24 horas finales para que otras la mejoren, y la
           más alta se lleva la prenda.
         </p>
@@ -86,7 +89,7 @@ export default async function Inicio({ searchParams }: Props) {
           <div key={n} className="rounded-2xl bg-white p-5 ring-1 ring-arena">
             <p className="font-serif text-2xl italic text-rosa">{n}</p>
             <p className="mt-1 font-medium">{t}</p>
-            <p className="mt-1 text-sm text-cafe/70">{d}</p>
+            <p className="mt-1 text-sm text-cafe/90">{d}</p>
           </div>
         ))}
       </section>
@@ -108,7 +111,7 @@ export default async function Inicio({ searchParams }: Props) {
         </div>
 
         {articulos.length === 0 ? (
-          <p className="rounded-2xl bg-white p-10 text-center text-cafe/70 ring-1 ring-arena">
+          <p className="rounded-2xl bg-white p-10 text-center text-cafe/90 ring-1 ring-arena">
             Pronto publicamos nuevas prendas. Síguenos en Instagram para enterarte primero.
           </p>
         ) : (

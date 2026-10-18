@@ -6,7 +6,7 @@ import { EMPRESA, SITIO_URL } from "@/lib/empresa";
 import { crearClienteServidor } from "@/lib/supabase/server";
 
 const descripcion =
-  "Ropa, zapatos y carteras de segunda mano seleccionadas. Cada prenda tiene una oferta mínima: la primera oferta abre 24 horas finales y gana la más alta. Envíos a todo Chile.";
+  "Ropa, zapatos y carteras de segunda mano. Oferta desde el mínimo: la primera oferta abre 24 horas finales y gana la más alta. Envíos a todo Chile.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO_URL),
@@ -56,7 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     </Link>
                   )}
                   <form action="/auth/salir" method="post">
-                    <button className="text-cafe/70 hover:text-rosa">Salir</button>
+                    <button className="text-cafe/90 hover:text-rosa">Salir</button>
                   </form>
                 </>
               ) : (
@@ -68,7 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
         <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
-        <footer className="space-y-3 border-t border-arena px-4 py-8 text-center text-xs text-cafe/70">
+        <footer className="space-y-3 border-t border-arena px-4 py-8 text-center text-xs text-cafe/90">
           <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-cafe">
             <Link href="/preguntas-frecuentes" className="hover:text-rosa">
               Preguntas frecuentes

@@ -89,11 +89,11 @@ export default async function PaginaArticulo({ params }: Props) {
     <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosProducto(a, estado)) }} />
       <div className="space-y-3">
-        <Foto src={a.fotos[0]} alt={a.titulo} className="aspect-[4/5] w-full rounded-3xl" />
+        <Foto src={a.fotos[0]} alt={a.titulo} className="aspect-[4/5] w-full rounded-3xl" sizes="(min-width: 1024px) 600px, 100vw" priority />
         {a.fotos.length > 1 && (
           <div className="grid grid-cols-4 gap-3">
             {a.fotos.slice(1).map((f, i) => (
-              <Foto key={f} src={f} alt={`${a.titulo} foto ${i + 2}`} className="aspect-square w-full rounded-xl" />
+              <Foto key={f} src={f} alt={`${a.titulo} foto ${i + 2}`} className="aspect-square w-full rounded-xl" sizes="(min-width: 1024px) 150px, 25vw" />
             ))}
           </div>
         )}
@@ -103,7 +103,7 @@ export default async function PaginaArticulo({ params }: Props) {
         <div className="space-y-2">
           <EtiquetaEstado estado={estado} />
           <h1 className="font-serif text-3xl leading-tight">{a.titulo}</h1>
-          <p className="text-sm text-cafe/70">
+          <p className="text-sm text-cafe/90">
             {[a.marca, a.talla && `Talla ${a.talla}`, a.categoria].filter(Boolean).join(" · ")}
           </p>
         </div>
@@ -112,7 +112,7 @@ export default async function PaginaArticulo({ params }: Props) {
 
         {a.descripcion && <p className="whitespace-pre-line text-sm leading-relaxed text-tinta/90">{a.descripcion}</p>}
 
-        <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/80">
+        <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/90">
           Prenda de segunda mano: su estado y cualquier detalle o defecto se informan en la descripción y en las
           fotos. Tienes derecho a retracto dentro de 10 días desde que la recibes.{" "}
           <Link href="/terminos" className="underline">
@@ -138,7 +138,7 @@ export default async function PaginaArticulo({ params }: Props) {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-cafe/70">Aún no hay ofertas. ¡Sé la primera!</p>
+            <p className="text-sm text-cafe/90">Aún no hay ofertas. ¡Sé la primera!</p>
           )}
         </div>
       </div>
