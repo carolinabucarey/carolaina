@@ -84,7 +84,7 @@ export async function cambiarEstado(articuloId: string, estado: EstadoArticulo) 
   const { supabase } = await exigirAdmin();
   if (estado === "activo") {
     const { data: min } = await supabase.from("articulos_minimo").select("precio_minimo").eq("articulo_id", articuloId).maybeSingle();
-    if (!min) throw new Error("Define el mínimo interno antes de publicar");
+    if (!min) throw new Error("Define la oferta mínima antes de publicar");
   }
   const { error } = await supabase
     .from("articulos")

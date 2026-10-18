@@ -27,7 +27,7 @@ export default async function ImagenOpenGraph() {
         <img src={logoSrc} width={380} height={380} alt="" />
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 600 }}>
           <div style={{ fontSize: 20, letterSpacing: 3, textTransform: "uppercase", color: "#b9706f" }}>
-            Ropa de segunda mano · sin precio
+            Ropa de segunda mano · precio por ofertas
           </div>
           <div style={{ marginTop: 24, fontSize: 64, lineHeight: 1.1, color: "#6b4f3a" }}>
             Deja tu oferta, llévate la prenda

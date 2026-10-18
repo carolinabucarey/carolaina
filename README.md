@@ -2,11 +2,11 @@
 
 Web de subastas para las prendas de [@elroperodecarolaina](https://www.instagram.com/elroperodecarolaina/), con las mismas reglas del Instagram:
 
-1. Las prendas se publican **sin precio** y se adjudican a la mejor oferta.
-2. Cada prenda tiene un **mínimo interno** (oculto al público).
-3. Cuando una oferta alcanza el mínimo, se abren **24 h finales** para más ofertas.
+1. Las prendas se adjudican a la mejor oferta.
+2. Cada prenda muestra una **oferta mínima** (precio de partida): la primera oferta debe alcanzarla.
+3. La primera oferta abre **24 h finales** para mejorarla.
 4. Al cerrar, gana la oferta más alta (en empate, la primera). La ganadora recibe un correo y la prenda aparece en «Por coordinar» en el panel.
-5. **Venta directa** opcional, disponible mientras no se alcance el mínimo.
+5. **Venta directa** opcional, disponible hasta la primera oferta.
 
 ## Stack
 
@@ -33,13 +33,13 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
    insert into public.admins (user_id)
    select id from auth.users where email = 'TU_CORREO';
    ```
-5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos, define el **mínimo interno** (y si quieres, la venta directa) y presiona **Publicar**.
+5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos, define la **oferta mínima** (y si quieres, la venta directa) y presiona **Publicar**.
 
 ## Avisos por correo
 
 `/api/cron/notificar` cierra subastas vencidas y envía:
 - a la ganadora: confirmación con el monto;
-- a la admin (`ADMIN_EMAIL`): cada adjudicación y cada vez que una prenda alcanza el mínimo (momento de subir la historia de «últimas 24 h»).
+- a la admin (`ADMIN_EMAIL`): cada adjudicación y cada vez que una prenda recibe su primera oferta (momento de subir la historia de «últimas 24 h»).
 
 Lo llama **Vercel Cron** cada 5 minutos (`vercel.json`). Vercel envía `Authorization: Bearer CRON_SECRET` automáticamente cuando la variable `CRON_SECRET` existe en el proyecto, así que no hay que configurar nada más. Para probarlo al instante: Vercel → proyecto → *Settings → Cron Jobs → Run*.
 

@@ -25,5 +25,9 @@ export const aceptaOfertas = (a: Pick<Articulo, "estado" | "cierre_at">) => {
   return e === "activo" || e === "cuenta_regresiva";
 };
 
-export const pisoOferta = (a: Pick<Articulo, "oferta_actual" | "incremento_minimo">) =>
-  (a.oferta_actual ?? 0) + a.incremento_minimo;
+/** Igual que en ofertar(): la oferta actual más el incremento, y nunca menos que la oferta mínima. */
+export const pisoOferta = (a: Pick<Articulo, "oferta_actual" | "incremento_minimo" | "precio_minimo">) =>
+  Math.max(
+    a.oferta_actual == null ? a.incremento_minimo : a.oferta_actual + a.incremento_minimo,
+    a.precio_minimo ?? 0,
+  );

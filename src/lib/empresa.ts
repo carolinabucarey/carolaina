@@ -19,4 +19,4 @@ export const EMPRESA = {
 
 export const SITIO_URL = process.env.NEXT_PUBLIC_SITIO_URL ?? "https://elroperodecarolaina.vercel.app";
 
-export const VERSION_LEGAL = { version: "1.0", vigencia: "18 de octubre de 2026" };
+export const VERSION_LEGAL = { version: "1.1", vigencia: "18 de octubre de 2026" };

@@ -62,19 +62,19 @@ export default function Terminos() {
       </ul>
 
       <h2>5. Cómo se compra: venta por ofertas</h2>
-      <p>Las prendas se publican sin precio y se venden a la mejor oferta, con estas reglas:</p>
+      <p>Las prendas se venden a la mejor oferta, con estas reglas:</p>
       <ol>
         <li>
-          Cada prenda tiene un <strong>precio mínimo de venta</strong> que no se muestra. Mientras ninguna oferta lo
-          alcance, la prenda no se vende.
+          Cada prenda muestra una <strong>oferta mínima</strong>: la primera oferta debe ser de al menos ese monto.
+          Bajo ese valor la prenda no se vende.
         </li>
         <li>
-          Cada oferta debe superar a la anterior al menos en el incremento mínimo que indica la ficha. Las ofertas se
+          La primera oferta abre un <strong>período final de 24 horas</strong> en el que cualquiera puede mejorarla. La
+          cuenta regresiva se muestra en la ficha.
+        </li>
+        <li>
+          Cada nueva oferta debe superar a la anterior al menos en el incremento que indica la ficha. Las ofertas se
           expresan en pesos chilenos e incluyen IVA.
-        </li>
-        <li>
-          Cuando una oferta alcanza el precio mínimo, se abre un <strong>período final de 24 horas</strong> en el que
-          se pueden seguir haciendo ofertas. La cuenta regresiva se muestra en la ficha.
         </li>
         <li>
           Al terminar las 24 horas, la prenda se adjudica a la <strong>oferta más alta</strong>. Si dos ofertas son
@@ -91,8 +91,8 @@ export default function Terminos() {
       </ol>
       <h3>Venta directa</h3>
       <p>
-        Algunas prendas tienen además un precio de <strong>venta directa</strong>. Mientras ninguna oferta haya
-        alcanzado el precio mínimo, puedes comprarla de inmediato a ese precio; la venta por ofertas termina en ese
+        Algunas prendas tienen además un precio de <strong>venta directa</strong>. Mientras nadie haya ofertado
+        por ella, puedes comprarla de inmediato a ese precio; la venta por ofertas termina en ese
         momento.
       </p>
 

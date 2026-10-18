@@ -67,7 +67,7 @@ export async function GET(request: Request) {
       await enviarCorreo(
         admin,
         `⏳ Partieron las 24 h: ${a.titulo}`,
-        `<p>«${a.titulo}» alcanzó el mínimo con ${pesos(a.oferta_actual)}. Cierra el ${new Date(a.cierre_at!).toLocaleString("es-CL", { timeZone: "America/Santiago" })}.</p><p>Buen momento para subir la historia a Instagram: <a href="${sitio}/articulo/${a.slug}">${sitio}/articulo/${a.slug}</a></p>`,
+        `<p>«${a.titulo}» recibió su primera oferta: ${pesos(a.oferta_actual)}. Cierra el ${new Date(a.cierre_at!).toLocaleString("es-CL", { timeZone: "America/Santiago" })}.</p><p>Buen momento para subir la historia a Instagram: <a href="${sitio}/articulo/${a.slug}">${sitio}/articulo/${a.slug}</a></p>`,
       );
     }
     await db.from("articulos").update({ aviso_minimo_at: new Date().toISOString() }).eq("id", a.id);

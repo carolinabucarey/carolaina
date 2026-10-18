@@ -45,6 +45,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
   const abierta = aceptaOfertas(a);
   const piso = pisoOferta(a);
   const gane = usuarioId && a.ganador_id === usuarioId;
+  const sinOfertas = abierta && a.oferta_actual == null;
 
   function ofertar(e: React.FormEvent) {
     e.preventDefault();
@@ -64,7 +65,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
       setMensaje({
         tipo: "ok",
         texto: data?.minimo_alcanzado
-          ? "¡Tu oferta alcanzó el mínimo! Empiezan las 24 h finales."
+          ? "¡Tu oferta abrió las 24 h finales! Si nadie la mejora, la prenda es tuya."
           : "¡Oferta registrada! Puedes seguirla en Mis ofertas.",
       });
       router.refresh();
@@ -85,9 +86,11 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
     <div className="space-y-4 rounded-3xl bg-white p-6 ring-1 ring-arena">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs text-cafe/60">{abierta ? "Oferta actual" : "Precio final"}</p>
-          <p className="text-3xl font-semibold">{pesos(abierta ? a.oferta_actual : a.monto_final)}</p>
-          <p className="text-xs text-cafe/60">{a.total_ofertas} ofertas</p>
+          <p className="text-xs text-cafe/60">{sinOfertas ? "Oferta mínima" : abierta ? "Oferta actual" : "Precio final"}</p>
+          <p className="text-3xl font-semibold">
+            {pesos(sinOfertas ? a.precio_minimo : abierta ? a.oferta_actual : a.monto_final)}
+          </p>
+          <p className="text-xs text-cafe/60">{sinOfertas ? "Aún sin ofertas" : `${a.total_ofertas} ofertas`}</p>
         </div>
         {estado === "cuenta_regresiva" && a.cierre_at && (
           <div className="text-right">
@@ -99,7 +102,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
 
       {estado === "activo" && (
         <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/80">
-          Aún no se alcanza el mínimo interno. Cuando una oferta lo alcance, se abrirán 24 h finales.
+          La primera oferta desde {pesos(piso)} abre 24 horas finales para que otras puedan mejorarla.
         </p>
       )}
 

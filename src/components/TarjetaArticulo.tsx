@@ -26,8 +26,12 @@ export default function TarjetaArticulo({ a }: { a: Articulo }) {
         </p>
         <div className="flex items-end justify-between pt-2 text-sm">
           <div>
-            <p className="text-xs text-cafe/60">{cerrado ? "Precio final" : "Oferta actual"}</p>
-            <p className="font-semibold">{pesos(cerrado ? a.monto_final : a.oferta_actual)}</p>
+            <p className="text-xs text-cafe/60">
+              {cerrado ? "Precio final" : a.oferta_actual == null ? "Oferta mínima" : "Oferta actual"}
+            </p>
+            <p className="font-semibold">
+              {pesos(cerrado ? a.monto_final : (a.oferta_actual ?? a.precio_minimo))}
+            </p>
           </div>
           {estado === "cuenta_regresiva" && a.cierre_at ? (
             <CuentaRegresiva cierre={a.cierre_at} className="font-mono text-sm text-rosa" />

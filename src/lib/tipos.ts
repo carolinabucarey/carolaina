@@ -18,6 +18,7 @@ export type Articulo = {
   instagram_url: string | null;
   estado: EstadoArticulo;
   precio_venta_directa: number | null;
+  precio_minimo: number | null; // oferta mínima, pública: la primera oferta debe alcanzarla
   incremento_minimo: number;
   oferta_actual: number | null;
   total_ofertas: number;

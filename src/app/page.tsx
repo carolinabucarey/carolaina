@@ -19,7 +19,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   // La plantilla de títulos del layout no se aplica a esta página (mismo segmento), por eso va completo.
   return {
     title: `${categoria} de segunda mano · ${EMPRESA.marca}`,
-    description: `${categoria} de segunda mano seleccionados en ${EMPRESA.marca}. Sin precio: deja tu oferta y llévatelos. Envíos a todo Chile.`,
+    description: `${categoria} de segunda mano seleccionados en ${EMPRESA.marca}. Oferta desde el mínimo y llévatelos. Envíos a todo Chile.`,
   };
 }
 
@@ -68,19 +68,19 @@ export default async function Inicio({ searchParams }: Props) {
           priority
           className="mx-auto mb-5 h-32 w-32 drop-shadow-sm sm:h-40 sm:w-40"
         />
-        <p className="text-xs uppercase tracking-[0.25em] text-cafe/70">Ropa de segunda mano seleccionada · sin precio</p>
+        <p className="text-xs uppercase tracking-[0.25em] text-cafe/70">Ropa de segunda mano seleccionada · precio por ofertas</p>
         <h1 className="mt-3 font-serif text-3xl italic text-cafe sm:text-5xl">Deja tu oferta, llévate la prenda</h1>
         <p className="mx-auto mt-4 max-w-xl text-sm text-cafe/80 sm:text-base">
-          Cada prenda tiene un mínimo interno. Cuando una oferta lo alcanza, se abren 24 horas finales para más
-          ofertas y la mejor se la lleva.
+          Cada prenda tiene una oferta mínima. La primera oferta abre 24 horas finales para que otras la mejoren, y la
+          más alta se lleva la prenda.
         </p>
       </section>
 
       <section id="como-funciona" className="grid gap-4 sm:grid-cols-4">
         {[
-          ["1", "Elige", "Las prendas se publican sin precio."],
-          ["2", "Oferta", "Ingresa con tu correo y deja tu monto."],
-          ["3", "24 h finales", "Al alcanzar el mínimo interno corre la cuenta regresiva."],
+          ["1", "Elige", "Cada prenda muestra su oferta mínima."],
+          ["2", "Oferta", "Ingresa con tu correo y ofrece desde el mínimo."],
+          ["3", "24 h finales", "La primera oferta abre la cuenta regresiva."],
           ["4", "Adjudicación", "Gana la oferta más alta y te contactamos para el pago y envío."],
         ].map(([n, t, d]) => (
           <div key={n} className="rounded-2xl bg-white p-5 ring-1 ring-arena">

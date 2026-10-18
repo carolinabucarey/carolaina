@@ -6,7 +6,7 @@ import { EMPRESA, SITIO_URL } from "@/lib/empresa";
 import { crearClienteServidor } from "@/lib/supabase/server";
 
 const descripcion =
-  "Ropa, zapatos y carteras de segunda mano seleccionadas. Las prendas se publican sin precio: deja tu oferta y, al alcanzar el mínimo, corren 24 horas finales. Envíos a todo Chile.";
+  "Ropa, zapatos y carteras de segunda mano seleccionadas. Cada prenda tiene una oferta mínima: la primera oferta abre 24 horas finales y gana la más alta. Envíos a todo Chile.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO_URL),

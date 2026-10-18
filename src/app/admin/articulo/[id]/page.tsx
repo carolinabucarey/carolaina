@@ -78,10 +78,10 @@ export default async function EditarArticulo({
           <textarea name="descripcion" rows={5} defaultValue={a?.descripcion ?? ""} className="campo" />
         </Campo>
         <div className="grid gap-4 sm:grid-cols-3">
-          <Campo etiqueta="Mínimo interno (oculto)" ayuda={enJuego ? "Ya se alcanzó: cambiarlo no afecta esta subasta." : "Al alcanzarse parten las 24 h."}>
+          <Campo etiqueta="Oferta mínima (visible)" ayuda={enJuego ? "Ya hay ofertas: cambiarla no afecta esta venta." : "La primera oferta debe alcanzarla y abre las 24 h."}>
             <input name="precio_minimo" inputMode="numeric" defaultValue={a?.articulos_minimo?.precio_minimo ?? ""} className="campo" placeholder="15000" />
           </Campo>
-          <Campo etiqueta="Venta directa (opcional)" ayuda="Disponible hasta que se alcance el mínimo.">
+          <Campo etiqueta="Venta directa (opcional)" ayuda="Disponible hasta la primera oferta.">
             <input name="precio_venta_directa" inputMode="numeric" defaultValue={a?.precio_venta_directa ?? ""} className="campo" placeholder="30000" />
           </Campo>
           <Campo etiqueta="Incremento mínimo">

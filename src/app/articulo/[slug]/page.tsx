@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function datosProducto(a: Articulo, estado: EstadoArticulo) {
-  const precio = a.monto_final ?? a.oferta_actual ?? a.precio_venta_directa;
+  const precio = a.monto_final ?? a.oferta_actual ?? a.precio_minimo ?? a.precio_venta_directa;
   return {
     "@context": "https://schema.org",
     "@type": "Product",

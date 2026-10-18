@@ -5,7 +5,7 @@ import { EMPRESA } from "@/lib/empresa";
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
   description:
-    "Cómo funcionan las ofertas, el precio mínimo y las 24 horas finales, cómo pagar, el envío por pagar, el derecho a retracto y la garantía de las prendas.",
+    "Cómo funcionan las ofertas, la oferta mínima y las 24 horas finales, cómo pagar, el envío por pagar, el derecho a retracto y la garantía de las prendas.",
   alternates: { canonical: "/preguntas-frecuentes" },
 };
 
@@ -17,23 +17,23 @@ const SECCIONES: { titulo: string; preguntas: Pregunta[] }[] = [
     preguntas: [
       {
         p: "¿Cómo funciona la venta por ofertas?",
-        r: "Las prendas se publican sin precio. Ingresas con tu correo y ofreces lo que quieras pagar. Cada prenda tiene un precio mínimo; cuando una oferta lo alcanza, se abren 24 horas finales para más ofertas y, al terminar, la prenda es para la oferta más alta.",
+        r: "Cada prenda muestra una oferta mínima. Ingresas con tu correo y ofreces desde ese monto. La primera oferta abre 24 horas finales en las que otras personas pueden mejorarla y, al terminar, la prenda es para la oferta más alta.",
       },
       {
-        p: "¿Por qué las prendas no muestran precio?",
-        r: "Porque el precio lo definen las ofertas. Así cada prenda llega a quien más la quiere, a un valor justo. En la ficha siempre ves la oferta actual y cuántas ofertas lleva.",
+        p: "¿Por qué no hay un precio fijo?",
+        r: "Porque el precio final lo definen las ofertas, partiendo desde la oferta mínima. Así cada prenda llega a quien más la quiere, a un valor justo. En la ficha siempre ves la oferta actual y cuántas ofertas lleva.",
       },
       {
-        p: "¿Qué es el precio mínimo y por qué no lo veo?",
-        r: "Es el valor bajo el cual no vendemos la prenda. Se mantiene reservado para que las ofertas reflejen lo que cada persona está dispuesta a pagar. Mientras ninguna oferta lo alcance, la ficha dice «Aún no se alcanza el mínimo».",
+        p: "¿Qué es la oferta mínima?",
+        r: "Es el monto desde el que puedes ofertar por una prenda: bajo ese valor no la vendemos. Aparece en el catálogo y en la ficha mientras nadie haya ofertado.",
       },
       {
-        p: "¿Qué pasa cuando una oferta alcanza el mínimo?",
-        r: "Empieza una cuenta regresiva de 24 horas que se ve en la ficha. Durante ese tiempo cualquiera puede seguir ofertando. Al llegar a cero, gana la oferta más alta.",
+        p: "¿Qué pasa cuando alguien hace la primera oferta?",
+        r: "Empieza una cuenta regresiva de 24 horas que se ve en la ficha. Durante ese tiempo cualquiera puede mejorar la oferta. Al llegar a cero, gana la oferta más alta.",
       },
       {
         p: "¿Cuánto tengo que subir sobre la oferta anterior?",
-        r: "Cada ficha indica la oferta mínima que puedes hacer: la oferta actual más un incremento mínimo (normalmente $1.000).",
+        r: "Cada nueva oferta debe superar a la actual al menos en el incremento que indica la ficha (normalmente $1.000). El campo para ofertar te muestra el monto desde el que puedes ofrecer.",
       },
       {
         p: "¿Qué pasa si dos personas ofrecen lo mismo?",
@@ -45,7 +45,7 @@ const SECCIONES: { titulo: string; preguntas: Pregunta[] }[] = [
       },
       {
         p: "¿Qué es la venta directa?",
-        r: "Algunas prendas tienen un precio para comprarlas de inmediato. Está disponible solo mientras ninguna oferta haya alcanzado el mínimo; si la usas, la prenda es tuya y se cierran las ofertas.",
+        r: "Algunas prendas tienen un precio para comprarlas de inmediato. Está disponible solo mientras nadie haya ofertado; si la usas, la prenda es tuya y se cierran las ofertas.",
       },
       {
         p: "¿Cómo sé si gané?",
