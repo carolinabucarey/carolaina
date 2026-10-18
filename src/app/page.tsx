@@ -14,10 +14,11 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   if (!categoria || !(CATEGORIAS as readonly string[]).includes(categoria)) {
     return { alternates: { canonical: "/" } };
   }
+  // Sin canónica: Next.js descarta el ?categoria= cuando la ruta es "/" y la apuntaría a la portada.
+  // La plantilla de títulos del layout no se aplica a esta página (mismo segmento), por eso va completo.
   return {
-    title: `${categoria} de segunda mano`,
-    description: `${categoria} de segunda mano seleccionados en El Ropero de Carolaina. Sin precio: deja tu oferta y llévatelos. Envíos a todo Chile.`,
-    alternates: { canonical: `/?categoria=${encodeURIComponent(categoria)}` },
+    title: `${categoria} de segunda mano · ${EMPRESA.marca}`,
+    description: `${categoria} de segunda mano seleccionados en ${EMPRESA.marca}. Sin precio: deja tu oferta y llévatelos. Envíos a todo Chile.`,
   };
 }
 
