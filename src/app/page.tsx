@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import TarjetaArticulo from "@/components/TarjetaArticulo";
 import { EMPRESA, SITIO_URL } from "@/lib/empresa";
@@ -28,7 +29,7 @@ const datosTienda = {
   name: EMPRESA.marca,
   legalName: EMPRESA.razonSocial,
   url: SITIO_URL,
-  logo: `${SITIO_URL}/icon.svg`,
+  logo: `${SITIO_URL}/logo.png`,
   email: EMPRESA.correo,
   sameAs: [EMPRESA.instagram],
   areaServed: "CL",
@@ -59,6 +60,14 @@ export default async function Inicio({ searchParams }: Props) {
     <div className="space-y-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosTienda) }} />
       <section className="rounded-3xl bg-arena/60 px-6 py-10 text-center sm:px-12">
+        <Image
+          src="/logo.png"
+          alt="Logo de El Ropero de Carolaina"
+          width={160}
+          height={160}
+          priority
+          className="mx-auto mb-5 h-32 w-32 drop-shadow-sm sm:h-40 sm:w-40"
+        />
         <p className="text-xs uppercase tracking-[0.25em] text-cafe/70">Ropa de segunda mano seleccionada · sin precio</p>
         <h1 className="mt-3 font-serif text-3xl italic text-cafe sm:text-5xl">Deja tu oferta, llévate la prenda</h1>
         <p className="mx-auto mt-4 max-w-xl text-sm text-cafe/80 sm:text-base">

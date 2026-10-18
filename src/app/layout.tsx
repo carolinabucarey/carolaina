@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import { EMPRESA, SITIO_URL } from "@/lib/empresa";
@@ -36,8 +37,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="min-h-screen antialiased">
         <header className="sticky top-0 z-20 border-b border-arena bg-crema/90 backdrop-blur">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-            <Link href="/" className="font-serif text-xl italic text-cafe">
-              El Ropero de Carolaina
+            <Link href="/" className="flex items-center gap-3 font-serif text-xl italic text-cafe">
+              <Image src="/logo.png" alt="" width={44} height={44} priority className="h-11 w-11" />
+              <span className="sr-only sm:not-sr-only">El Ropero de Carolaina</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm">
               <Link href="/#como-funciona" className="hidden hover:text-rosa sm:inline">
