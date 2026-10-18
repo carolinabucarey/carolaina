@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-crema: #f8f3ec;
+  --color-arena: #ecdfcd;
+  --color-lino: #d9c6ad;
+  --color-cafe: #6b4f3a;
+  --color-tinta: #2f2620;
+  --color-rosa: #b9706f;
+  --color-rosa-suave: #f3dcd9;
+  --color-salvia: #6f8a6a;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--color-crema);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+}
+
+.boton {
+  @apply inline-flex items-center justify-center rounded-full bg-cafe px-5 py-2.5 text-sm font-medium text-crema transition hover:bg-tinta disabled:cursor-not-allowed disabled:opacity-50;
+}
+.boton-secundario {
+  @apply inline-flex items-center justify-center rounded-full border border-cafe px-5 py-2.5 text-sm font-medium text-cafe transition hover:bg-arena disabled:cursor-not-allowed disabled:opacity-50;
+}
+.campo {
+  @apply w-full rounded-xl border border-lino bg-white px-3 py-2 text-sm outline-none focus:border-cafe focus:ring-2 focus:ring-arena;
+}
