@@ -152,6 +152,16 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
       {mensaje && (
         <p className={`text-sm ${mensaje.tipo === "ok" ? "text-salvia" : "text-rosa"}`}>{mensaje.texto}</p>
       )}
+
+      {abierta && usuarioId && (
+        <p className="text-xs text-cafe/60">
+          Tu oferta es un compromiso de compra. Al ofertar o comprar aceptas los{" "}
+          <Link href="/terminos" className="underline">
+            Términos y condiciones
+          </Link>
+          , que incluyen tu derecho a retracto.
+        </p>
+      )}
     </div>
   );
 }

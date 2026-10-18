@@ -1,21 +1,74 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import EtiquetaEstado from "@/components/EtiquetaEstado";
 import Foto from "@/components/Foto";
 import { estadoEfectivo, pesos } from "@/lib/formato";
 import { crearClienteServidor } from "@/lib/supabase/server";
-import type { Articulo } from "@/lib/tipos";
+import { EMPRESA, SITIO_URL } from "@/lib/empresa";
+import type { Articulo, EstadoArticulo } from "@/lib/tipos";
 import PanelOferta from "./PanelOferta";
 
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
+const detalle = (a: Pick<Articulo, "marca" | "talla" | "categoria">) =>
+  [a.marca, a.talla && `talla ${a.talla}`, a.categoria.toLowerCase()].filter(Boolean).join(", ");
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const supabase = await crearClienteServidor();
-  const { data } = await supabase.from("articulos").select("titulo, fotos").eq("slug", slug).maybeSingle();
-  return data ? { title: `${data.titulo} · El Ropero de Carolaina`, openGraph: { images: data.fotos?.slice(0, 1) } } : {};
+  const { data } = await supabase
+    .from("articulos")
+    .select("titulo, fotos, marca, talla, categoria")
+    .eq("slug", slug)
+    .maybeSingle();
+  if (!data) return {};
+  const descripcion = `${data.titulo} de segunda mano (${detalle(data)}). Deja tu oferta en El Ropero de Carolaina. Envíos a todo Chile.`;
+  return {
+    title: data.titulo,
+    description: descripcion,
+    alternates: { canonical: `/articulo/${slug}` },
+    openGraph: {
+      type: "website",
+      locale: "es_CL",
+      siteName: EMPRESA.marca,
+      title: data.titulo,
+      description: descripcion,
+      ...(data.fotos?.length ? { images: data.fotos.slice(0, 1) } : {}),
+    },
+  };
+}
+
+function datosProducto(a: Articulo, estado: EstadoArticulo) {
+  const precio = a.monto_final ?? a.oferta_actual ?? a.precio_venta_directa;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: a.titulo,
+    description: a.descripcion ?? `${a.titulo} de segunda mano (${detalle(a)}).`,
+    image: a.fotos,
+    category: a.categoria,
+    ...(a.marca ? { brand: { "@type": "Brand", name: a.marca } } : {}),
+    ...(a.talla ? { size: a.talla } : {}),
+    ...(precio
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: `${SITIO_URL}/articulo/${a.slug}`,
+            priceCurrency: "CLP",
+            price: precio,
+            itemCondition: "https://schema.org/UsedCondition",
+            availability:
+              estado === "activo" || estado === "cuenta_regresiva"
+                ? "https://schema.org/InStock"
+                : "https://schema.org/SoldOut",
+            seller: { "@type": "Organization", name: EMPRESA.marca },
+          },
+        }
+      : {}),
+  };
 }
 
 export default async function PaginaArticulo({ params }: Props) {
@@ -34,6 +87,7 @@ export default async function PaginaArticulo({ params }: Props) {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosProducto(a, estado)) }} />
       <div className="space-y-3">
         <Foto src={a.fotos[0]} alt={a.titulo} className="aspect-[4/5] w-full rounded-3xl" />
         {a.fotos.length > 1 && (
@@ -57,6 +111,14 @@ export default async function PaginaArticulo({ params }: Props) {
         <PanelOferta inicial={a} usuarioId={usuario?.id ?? null} />
 
         {a.descripcion && <p className="whitespace-pre-line text-sm leading-relaxed text-tinta/90">{a.descripcion}</p>}
+
+        <p className="rounded-xl bg-crema px-3 py-2 text-xs text-cafe/80">
+          Prenda de segunda mano: su estado y cualquier detalle o defecto se informan en la descripción y en las
+          fotos. Tienes derecho a retracto dentro de 10 días desde que la recibes.{" "}
+          <Link href="/terminos" className="underline">
+            Ver condiciones
+          </Link>
+        </p>
 
         {a.instagram_url && (
           <a href={a.instagram_url} target="_blank" className="inline-block text-sm text-rosa underline">

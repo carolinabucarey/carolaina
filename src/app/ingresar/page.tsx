@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
@@ -24,10 +25,6 @@ function Formulario() {
     } else setEstado("enviado");
   }
 
-  async function google() {
-    await crearClienteNavegador().auth.signInWithOAuth({ provider: "google", options: { redirectTo: redireccion() } });
-  }
-
   if (estado === "enviado") {
     return (
       <p className="text-center text-sm">
@@ -38,12 +35,6 @@ function Formulario() {
 
   return (
     <div className="space-y-4">
-      <button onClick={google} className="boton-secundario w-full">
-        Continuar con Google
-      </button>
-      <div className="flex items-center gap-3 text-xs text-cafe/60">
-        <span className="h-px flex-1 bg-arena" /> o con tu correo <span className="h-px flex-1 bg-arena" />
-      </div>
       <form onSubmit={enviar} className="space-y-3">
         <input type="email" required className="campo" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} />
         <button className="boton w-full" disabled={estado === "enviando"}>
@@ -51,6 +42,17 @@ function Formulario() {
         </button>
       </form>
       {estado === "error" && <p className="text-sm text-rosa">{error}</p>}
+      <p className="text-center text-xs text-cafe/60">
+        Al ingresar declaras ser mayor de 18 años y aceptas los{" "}
+        <Link href="/terminos" className="underline">
+          Términos y condiciones
+        </Link>{" "}
+        y la{" "}
+        <Link href="/privacidad" className="underline">
+          Política de privacidad
+        </Link>
+        .
+      </p>
     </div>
   );
 }

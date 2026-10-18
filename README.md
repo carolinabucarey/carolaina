@@ -11,7 +11,7 @@ Web de subastas para las prendas de [@elroperodecarolaina](https://www.instagram
 ## Stack
 
 - Next.js 15 (App Router) + Tailwind CSS 4
-- Supabase: Postgres, Auth (enlace por correo y Google), Storage (fotos), Realtime (oferta en vivo) y `pg_cron` (cierre automático cada minuto)
+- Supabase: Postgres, Auth (enlace por correo), Storage (fotos), Realtime (oferta en vivo) y `pg_cron` (cierre automático cada minuto)
 - Resend para correos (opcional)
 - Despliegue sugerido: Vercel
 
@@ -22,7 +22,6 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
 1. **Supabase**: crea un proyecto y, en *SQL Editor*, ejecuta `supabase/migrations/0001_subastas.sql` y luego `supabase/seed.sql` (44 prendas del Instagram como borradores).
    - En *Database → Extensions* deben quedar activas `pg_cron` y `pg_net`.
    - En *Authentication → URL Configuration* agrega `https://TU-SITIO/auth/callback` (y `http://localhost:3000/auth/callback`).
-   - Opcional: habilita Google en *Authentication → Providers*.
 2. **Variables**: copia `.env.example` a `.env.local` y completa los valores.
 3. **Local**:
    ```bash
