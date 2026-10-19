@@ -11,7 +11,7 @@ Web de subastas para las prendas de [@elroperodecarolaina](https://www.instagram
 ## Stack
 
 - Next.js 15 (App Router) + Tailwind CSS 4
-- Supabase: Postgres, Auth (enlace por correo), Storage (fotos), Realtime (oferta en vivo) y `pg_cron` (cierre automático cada minuto)
+- Supabase: Postgres, Auth (enlace por correo), Storage (fotos y videos), Realtime (oferta en vivo) y `pg_cron` (cierre automático cada minuto)
 - Resend para correos (opcional)
 - Despliegue sugerido: Vercel
 
@@ -19,7 +19,7 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
 
 ## Puesta en marcha
 
-1. **Supabase**: crea un proyecto y, en *SQL Editor*, ejecuta `supabase/migrations/0001_subastas.sql` y luego `supabase/seed.sql` (44 prendas del Instagram como borradores).
+1. **Supabase**: crea un proyecto y, en *SQL Editor*, ejecuta en orden los archivos de `supabase/migrations/` y luego `supabase/seed.sql` (44 prendas del Instagram como borradores).
    - En *Database → Extensions* deben quedar activas `pg_cron` y `pg_net`.
    - En *Authentication → URL Configuration* agrega `https://TU-SITIO/auth/callback` (y `http://localhost:3000/auth/callback`).
 2. **Variables**: copia `.env.example` a `.env.local` y completa los valores.
@@ -33,7 +33,7 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
    insert into public.admins (user_id)
    select id from auth.users where email = 'TU_CORREO';
    ```
-5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos, define la **oferta mínima** (y si quieres, la venta directa) y presiona **Publicar**.
+5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos (y videos, de hasta 50 MB), define la **oferta mínima** (y si quieres, la venta directa) y presiona **Publicar**.
 
 ## Avisos por correo
 

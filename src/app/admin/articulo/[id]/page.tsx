@@ -7,6 +7,7 @@ import { guardarArticulo } from "../../acciones";
 import { exigirAdmin } from "../../guardia";
 import AccionesEstado from "./AccionesEstado";
 import FotosEditables from "./FotosEditables";
+import VideosEditables from "./VideosEditables";
 
 export const dynamic = "force-dynamic";
 
@@ -95,6 +96,11 @@ export default async function EditarArticulo({
         <Campo etiqueta="Agregar fotos">
           <input name="fotos" type="file" accept="image/*" multiple className="text-sm" />
         </Campo>
+        {a ? (
+          <VideosEditables id={a.id} videos={a.videos ?? []} />
+        ) : (
+          <p className="text-xs text-cafe/90">Los videos se agregan después de guardar la prenda por primera vez.</p>
+        )}
         <button className="boton">Guardar</button>
       </form>
     </div>
