@@ -11,12 +11,14 @@ export default function Foto({
   className = "",
   sizes = "100vw",
   priority = false,
+  loading,
 }: {
   src?: string;
   alt: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  loading?: "eager" | "lazy";
 }) {
   if (!src) {
     return (
@@ -33,6 +35,7 @@ export default function Foto({
       height={1000}
       sizes={sizes}
       priority={priority}
+      loading={loading}
       className={`object-cover ${className}`}
     />
   );

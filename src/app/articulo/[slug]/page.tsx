@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import EtiquetaEstado from "@/components/EtiquetaEstado";
-import Foto from "@/components/Foto";
 import { estadoEfectivo, pesos } from "@/lib/formato";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { EMPRESA, SITIO_URL } from "@/lib/empresa";
 import type { Articulo, EstadoArticulo } from "@/lib/tipos";
+import CarruselFotos from "./CarruselFotos";
 import PanelOferta from "./PanelOferta";
 
 export const dynamic = "force-dynamic";
@@ -88,16 +88,7 @@ export default async function PaginaArticulo({ params }: Props) {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosProducto(a, estado)) }} />
-      <div className="space-y-3">
-        <Foto src={a.fotos[0]} alt={a.titulo} className="aspect-[4/5] w-full rounded-3xl" sizes="(min-width: 1024px) 600px, 100vw" priority />
-        {a.fotos.length > 1 && (
-          <div className="grid grid-cols-4 gap-3">
-            {a.fotos.slice(1).map((f, i) => (
-              <Foto key={f} src={f} alt={`${a.titulo} foto ${i + 2}`} className="aspect-square w-full rounded-xl" sizes="(min-width: 1024px) 150px, 25vw" />
-            ))}
-          </div>
-        )}
-      </div>
+      <CarruselFotos fotos={a.fotos} titulo={a.titulo} />
 
       <div className="space-y-6">
         <div className="space-y-2">
