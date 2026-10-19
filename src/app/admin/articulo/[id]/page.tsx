@@ -6,8 +6,7 @@ import { CATEGORIAS, type Articulo } from "@/lib/tipos";
 import { guardarArticulo } from "../../acciones";
 import { exigirAdmin } from "../../guardia";
 import AccionesEstado from "./AccionesEstado";
-import FotosEditables from "./FotosEditables";
-import VideosEditables from "./VideosEditables";
+import MediosEditables from "./MediosEditables";
 
 export const dynamic = "force-dynamic";
 
@@ -92,14 +91,13 @@ export default async function EditarArticulo({
         <Campo etiqueta="Publicación de Instagram">
           <input name="instagram_url" type="url" defaultValue={a?.instagram_url ?? ""} className="campo" placeholder="https://www.instagram.com/p/…" />
         </Campo>
-        {a && a.fotos.length > 0 && <FotosEditables id={a.id} fotos={a.fotos} />}
-        <Campo etiqueta="Agregar fotos">
-          <input name="fotos" type="file" accept="image/*" multiple className="text-sm" />
-        </Campo>
         {a ? (
-          <VideosEditables id={a.id} videos={a.videos ?? []} />
+          <>
+            <MediosEditables id={a.id} tipo="fotos" urls={a.fotos} />
+            <MediosEditables id={a.id} tipo="videos" urls={a.videos ?? []} />
+          </>
         ) : (
-          <p className="text-xs text-cafe/90">Los videos se agregan después de guardar la prenda por primera vez.</p>
+          <p className="text-xs text-cafe/90">Las fotos y videos se agregan después de guardar la prenda por primera vez.</p>
         )}
         <button className="boton">Guardar</button>
       </form>
