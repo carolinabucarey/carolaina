@@ -6,6 +6,7 @@ import CuentaRegresiva from "@/components/CuentaRegresiva";
 import { aceptaOfertas, estadoEfectivo, pesos, pisoOferta } from "@/lib/formato";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import type { Articulo } from "@/lib/tipos";
+import { comprarDirecto } from "./acciones";
 
 export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo; usuarioId: string | null }) {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
   const [monto, setMonto] = useState("");
   const [mensaje, setMensaje] = useState<{ tipo: "ok" | "error"; texto: string } | null>(null);
   const [pendiente, iniciar] = useTransition();
+  const [confirmando, setConfirmando] = useState(false);
   const [, forzar] = useState(0);
 
   useEffect(() => setA(inicial), [inicial]);
@@ -72,12 +74,13 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
     });
   }
 
-  function comprarDirecto() {
-    if (!confirm(`¿Confirmas la compra directa por ${pesos(a.precio_venta_directa)}?`)) return;
+  // La confirmación va en la página y no con confirm(): el navegador dentro de Instagram
+  // no muestra esos diálogos y el botón quedaba sin hacer nada.
+  function comprar() {
     iniciar(async () => {
-      const supabase = crearClienteNavegador();
-      const { error } = await supabase.rpc("comprar_directo", { p_articulo: a.id });
-      setMensaje(error ? { tipo: "error", texto: error.message } : { tipo: "ok", texto: "¡Es tuya! Te contactaremos para el pago y envío." });
+      const { error } = await comprarDirecto(a.id);
+      setConfirmando(false);
+      setMensaje(error ? { tipo: "error", texto: error } : null);
       router.refresh();
     });
   }
@@ -108,7 +111,7 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
 
       {gane && (
         <p className="rounded-xl bg-salvia/15 px-3 py-2 text-sm text-salvia">
-          ¡Te la llevaste! Te escribiremos para coordinar el pago y el envío.
+          ¡Es tuya! Abajo tienes los datos para transferir; también te los enviamos por correo.
         </p>
       )}
 
@@ -136,18 +139,37 @@ export default function PanelOferta({ inicial, usuarioId }: { inicial: Articulo;
         ))}
 
       {estado === "activo" && a.precio_venta_directa && (
-        <div className="flex items-center justify-between border-t border-arena pt-4 text-sm">
-          <span>
-            Venta directa: <strong>{pesos(a.precio_venta_directa)}</strong>
-          </span>
-          {usuarioId ? (
-            <button onClick={comprarDirecto} className="boton-secundario" disabled={pendiente}>
-              Comprar ahora
-            </button>
+        <div className="border-t border-arena pt-4 text-sm">
+          {confirmando ? (
+            <div className="space-y-3">
+              <p>
+                ¿Confirmas la compra por <strong>{pesos(a.precio_venta_directa)}</strong>? Te mostraremos los datos para
+                pagar por transferencia.
+              </p>
+              <div className="flex gap-2">
+                <button onClick={comprar} className="boton flex-1" disabled={pendiente}>
+                  {pendiente ? "Comprando…" : "Confirmar compra"}
+                </button>
+                <button onClick={() => setConfirmando(false)} className="boton-secundario" disabled={pendiente}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
           ) : (
-            <Link href={`/ingresar?volver=/articulo/${a.slug}`} className="boton-secundario">
-              Ingresa para comprar
-            </Link>
+            <div className="flex items-center justify-between">
+              <span>
+                Venta directa: <strong>{pesos(a.precio_venta_directa)}</strong>
+              </span>
+              {usuarioId ? (
+                <button onClick={() => setConfirmando(true)} className="boton-secundario" disabled={pendiente}>
+                  Comprar ahora
+                </button>
+              ) : (
+                <Link href={`/ingresar?volver=/articulo/${a.slug}`} className="boton-secundario">
+                  Ingresa para comprar
+                </Link>
+              )}
+            </div>
           )}
         </div>
       )}

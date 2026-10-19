@@ -53,6 +53,11 @@ export default async function MisOfertas() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
+                  {gane && (
+                    <Link href={`/articulo/${a.slug}`} className="text-xs text-rosa underline">
+                      Ver datos de pago
+                    </Link>
+                  )}
                   {gane && <span className="rounded-full bg-salvia px-2.5 py-1 text-xs font-medium text-white">¡Ganaste!</span>}
                   {voyGanando && <span className="rounded-full bg-salvia/15 px-2.5 py-1 text-xs font-medium text-salvia">Vas ganando</span>}
                   <EtiquetaEstado estado={estado} />

@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import EtiquetaEstado from "@/components/EtiquetaEstado";
+import { mailtoComprobante } from "@/lib/avisos";
 import { estadoEfectivo, pesos } from "@/lib/formato";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { EMPRESA, SITIO_URL } from "@/lib/empresa";
 import type { Articulo, EstadoArticulo } from "@/lib/tipos";
 import CarruselFotos from "./CarruselFotos";
+import DatosPago from "./DatosPago";
 import PanelOferta from "./PanelOferta";
 
 export const dynamic = "force-dynamic";
@@ -84,6 +86,8 @@ export default async function PaginaArticulo({ params }: Props) {
   ]);
   const usuario = auth.user;
   const estado = estadoEfectivo(a);
+  const meLaLleve =
+    !!usuario && a.ganador_id === usuario.id && (a.estado === "adjudicado" || a.estado === "vendido_directo");
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
@@ -100,6 +104,15 @@ export default async function PaginaArticulo({ params }: Props) {
         </div>
 
         <PanelOferta inicial={a} usuarioId={usuario?.id ?? null} />
+
+        {meLaLleve && (
+          <DatosPago
+            monto={pesos(a.monto_final)}
+            cuenta={EMPRESA.cuenta}
+            horas={EMPRESA.horasParaPagar}
+            mailto={mailtoComprobante(a.titulo, a.monto_final)}
+          />
+        )}
 
         {a.descripcion && <p className="whitespace-pre-line text-sm leading-relaxed text-tinta/90">{a.descripcion}</p>}
 

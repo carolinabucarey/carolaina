@@ -13,6 +13,16 @@ export const EMPRESA = {
   // El art. 14 ter de la Ley 19.628 (texto de la Ley 21.719) pide identificar al representante legal.
   representanteLegal: null as string | null,
   horasParaPagar: 24,
+  // Cuenta para pagar por transferencia. Se muestra solo a quien compró (en la ficha y en el correo de aviso);
+  // al banco se le pone el correo como destino para que nos llegue el comprobante.
+  cuenta: {
+    titular: "Luxe Skin Chile SpA",
+    rut: "78.136.093-7",
+    banco: "Mercado Pago",
+    tipo: "Cuenta Vista",
+    numero: "1061040107",
+    correo: "carolina@luxeskin.cl",
+  },
   diasHabilesDespacho: 3,
   couriers: "Starken, Chilexpress o Blue Express",
 };
