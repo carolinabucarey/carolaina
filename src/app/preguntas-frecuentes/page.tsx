@@ -71,7 +71,7 @@ const SECCIONES: { titulo: string; preguntas: Pregunta[] }[] = [
     preguntas: [
       {
         p: "¿Cómo pago?",
-        r: `Por transferencia bancaria o con un link de pago que te enviamos. Tienes ${EMPRESA.horasParaPagar} horas desde que te confirmamos la compra para pagar.`,
+        r: `Por transferencia bancaria: apenas compras te mostramos los datos de la cuenta y te los enviamos por correo. Tienes ${EMPRESA.horasParaPagar} horas para pagar y nos mandas el comprobante a ${EMPRESA.cuenta.correo}. Si lo prefieres, también podemos enviarte un link de pago.`,
       },
       {
         p: "¿Qué pasa si no pago a tiempo?",

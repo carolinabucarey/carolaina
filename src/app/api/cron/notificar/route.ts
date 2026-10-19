@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
+import { avisarCierre } from "@/lib/avisos";
 import { enviarCorreo } from "@/lib/correo";
-import { EMPRESA, VERSION_LEGAL } from "@/lib/empresa";
 import { pesos } from "@/lib/formato";
 import { crearClienteServicio } from "@/lib/supabase/servicio";
 
@@ -16,44 +16,17 @@ export async function GET(request: Request) {
 
   const { data: cerradas } = await db.rpc("cerrar_subastas_vencidas");
 
-  // 1) Adjudicaciones y ventas directas sin avisar
+  // 1) Adjudicaciones y ventas directas sin avisar (la compra directa ya avisa al tiro; esto cubre las subastas)
   const { data: pendientes } = await db
     .from("articulos")
-    .select("id, slug, titulo, estado, monto_final, ganador_id")
+    .select("id")
     .in("estado", ["adjudicado", "vendido_directo"])
     .is("notificado_at", null)
     .limit(50);
 
   let avisos = 0;
   for (const a of pendientes ?? []) {
-    const enlace = `${sitio}/articulo/${a.slug}`;
-    if (a.ganador_id) {
-      const { data: p } = await db.from("perfiles").select("nombre, email, telefono").eq("id", a.ganador_id).single();
-      if (p?.email) {
-        await enviarCorreo(
-          p.email,
-          `¡Te llevaste «${a.titulo}»! 🎉`,
-          `<p>Hola ${p.nombre ?? ""},</p>
-           <p>${a.estado === "vendido_directo" ? "Compraste" : "Tu oferta ganó:"} <strong>${a.titulo}</strong> por <strong>${pesos(a.monto_final)}</strong> (IVA incluido).</p>
-           <p>Te escribiremos en las próximas horas con los datos para pagar por transferencia o link de pago. Tienes ${EMPRESA.horasParaPagar} horas para pagar desde este aviso. Si prefieres, respóndenos este correo con tu WhatsApp.</p>
-           <p>El envío es por pagar (${EMPRESA.couriers}): lo pagas al courier al recibir. Despachamos dentro de ${EMPRESA.diasHabilesDespacho} días hábiles desde que confirmamos tu pago y emitimos boleta electrónica.</p>
-           <p>Tienes <strong>derecho a retracto</strong>: puedes dejar sin efecto la compra dentro de 10 días desde que recibes la prenda, escribiéndonos a ${EMPRESA.correo}.</p>
-           <p><a href="${enlace}">Ver la prenda</a> · <a href="${sitio}/terminos">Términos y condiciones (versión ${VERSION_LEGAL.version})</a></p>
-           <p>— ${EMPRESA.marca}<br>${EMPRESA.razonSocial} · RUT ${EMPRESA.rut} · ${EMPRESA.domicilio}</p>`,
-        );
-      }
-      if (admin) {
-        await enviarCorreo(
-          admin,
-          `Adjudicado: ${a.titulo} · ${pesos(a.monto_final)}`,
-          `<p><strong>${a.titulo}</strong> → ${p?.nombre ?? "?"} (${p?.email ?? "sin correo"}${p?.telefono ? ", " + p.telefono : ""}) por ${pesos(a.monto_final)}.</p><p><a href="${sitio}/admin?ver=coordinar">Abrir panel</a></p>`,
-        );
-      }
-    } else if (admin) {
-      await enviarCorreo(admin, `Cerró sin ofertas: ${a.titulo}`, `<p><a href="${enlace}">${a.titulo}</a> cerró sin ganador.</p>`);
-    }
-    await db.from("articulos").update({ notificado_at: new Date().toISOString() }).eq("id", a.id);
-    avisos++;
+    if (await avisarCierre(db, a.id, sitio)) avisos++;
   }
 
   // 2) Mínimos alcanzados: aviso a la admin para publicar la historia de "últimas 24 h"
