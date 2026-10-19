@@ -51,21 +51,6 @@ export async function guardarArticulo(formData: FormData) {
     if (error) throw new Error(error.message);
   }
 
-  // Fotos nuevas
-  const archivos = formData.getAll("fotos").filter((f): f is File => f instanceof File && f.size > 0);
-  if (archivos.length) {
-    const { data: actual } = await supabase.from("articulos").select("fotos").eq("id", articuloId).single();
-    const urls: string[] = [...(actual?.fotos ?? [])];
-    for (const f of archivos) {
-      const ext = f.name.split(".").pop()?.toLowerCase() || "jpg";
-      const ruta = `${articuloId}/${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage.from("fotos").upload(ruta, f, { contentType: f.type });
-      if (error) throw new Error(`No se pudo subir ${f.name}: ${error.message}`);
-      urls.push(supabase.storage.from("fotos").getPublicUrl(ruta).data.publicUrl);
-    }
-    await supabase.from("articulos").update({ fotos: urls }).eq("id", articuloId);
-  }
-
   revalidatePath("/admin");
   redirect(`/admin/articulo/${articuloId}?guardado=1`);
 }
@@ -88,20 +73,32 @@ async function quitarArchivo(articuloId: string, url: string, campo: "fotos" | "
   revalidatePath(`/admin/articulo/${articuloId}`);
 }
 
+export async function agregarFotos(articuloId: string, rutas: string[]) {
+  await agregarArchivos(articuloId, rutas, "fotos");
+}
+
+export async function agregarVideos(articuloId: string, rutas: string[]) {
+  await agregarArchivos(articuloId, rutas, "videos");
+}
+
 /**
- * Registra videos que el panel ya subió directo al bucket desde el navegador
- * (un video no cabe en el cuerpo de una server action en Vercel). Recibe rutas, no URLs,
+ * Anota al final de la lista los archivos que el panel ya subió directo al bucket desde el navegador
+ * (una server action en Vercel no acepta cuerpos de más de 4,5 MB). Recibe rutas, no URLs,
  * y solo acepta las de la carpeta de esta prenda.
  */
-export async function agregarVideos(articuloId: string, rutas: string[]) {
+async function agregarArchivos(articuloId: string, rutas: string[], campo: "fotos" | "videos") {
   const { supabase } = await exigirAdmin();
-  if (rutas.some((r) => !r.startsWith(`${articuloId}/`))) throw new Error("Ruta de video inválida");
-  const { data, error: errorLectura } = await supabase.from("articulos").select("videos").eq("id", articuloId).single();
+  if (rutas.some((r) => !r.startsWith(`${articuloId}/`))) throw new Error("Ruta de archivo inválida");
+  const { data, error: errorLectura } = await supabase
+    .from("articulos")
+    .select(campo)
+    .eq("id", articuloId)
+    .single<Record<string, string[]>>();
   if (errorLectura) throw new Error(errorLectura.message);
   const nuevas = rutas.map((r) => supabase.storage.from("fotos").getPublicUrl(r).data.publicUrl);
   const { error } = await supabase
     .from("articulos")
-    .update({ videos: [...(data.videos ?? []), ...nuevas], updated_at: new Date().toISOString() })
+    .update({ [campo]: [...(data[campo] ?? []), ...nuevas], updated_at: new Date().toISOString() })
     .eq("id", articuloId);
   if (error) throw new Error(error.message);
   revalidatePath(`/admin/articulo/${articuloId}`);

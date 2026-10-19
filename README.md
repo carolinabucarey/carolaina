@@ -33,7 +33,7 @@ Toda la lógica de la subasta vive en la base de datos (`supabase/migrations/000
    insert into public.admins (user_id)
    select id from auth.users where email = 'TU_CORREO';
    ```
-5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos (y videos, de hasta 50 MB), define la **oferta mínima** (y si quieres, la venta directa) y presiona **Publicar**.
+5. **Carga el catálogo**: en `/admin → Borradores`, abre cada prenda, sube fotos y videos (se suben al elegirlos, hasta 50 MB cada uno), define la **oferta mínima** (y si quieres, la venta directa) y presiona **Publicar**.
 
 ## Avisos por correo
 
