@@ -1,6 +1,6 @@
 # Logos de El Ropero de Carolaina
 
-Generados a partir del logo circular original (300 px). Las versiones de más de 300 px están ampliadas: si consigues el logo en mayor resolución, conviene regenerarlas.
+Generados a partir del logo con borde de encaje en 1024 px, así que todos los tamaños salen nítidos.
 
 | Carpeta | Para qué |
 |---|---|
