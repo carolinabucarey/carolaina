@@ -88,7 +88,7 @@ export default async function PaginaArticulo({ params }: Props) {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosProducto(a, estado)) }} />
-      <CarruselFotos fotos={a.fotos} titulo={a.titulo} />
+      <CarruselFotos fotos={a.fotos} videos={a.videos ?? []} titulo={a.titulo} />
 
       <div className="space-y-6">
         <div className="space-y-2">

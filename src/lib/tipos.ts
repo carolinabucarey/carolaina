@@ -15,6 +15,7 @@ export type Articulo = {
   talla: string | null;
   categoria: string;
   fotos: string[];
+  videos: string[]; // se muestran en la ficha después de la portada (migración 0003)
   instagram_url: string | null;
   estado: EstadoArticulo;
   precio_venta_directa: number | null;

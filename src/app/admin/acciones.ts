@@ -71,12 +71,39 @@ export async function guardarArticulo(formData: FormData) {
 }
 
 export async function quitarFoto(articuloId: string, url: string) {
+  await quitarArchivo(articuloId, url, "fotos");
+}
+
+export async function quitarVideo(articuloId: string, url: string) {
+  await quitarArchivo(articuloId, url, "videos");
+}
+
+async function quitarArchivo(articuloId: string, url: string, campo: "fotos" | "videos") {
   const { supabase } = await exigirAdmin();
-  const { data } = await supabase.from("articulos").select("fotos").eq("id", articuloId).single();
-  const fotos = (data?.fotos ?? []).filter((f: string) => f !== url);
-  await supabase.from("articulos").update({ fotos }).eq("id", articuloId);
+  const { data } = await supabase.from("articulos").select(campo).eq("id", articuloId).single<Record<string, string[]>>();
+  const lista = (data?.[campo] ?? []).filter((f) => f !== url);
+  await supabase.from("articulos").update({ [campo]: lista }).eq("id", articuloId);
   const ruta = url.split("/fotos/")[1];
   if (ruta) await supabase.storage.from("fotos").remove([ruta]);
+  revalidatePath(`/admin/articulo/${articuloId}`);
+}
+
+/**
+ * Registra videos que el panel ya subió directo al bucket desde el navegador
+ * (un video no cabe en el cuerpo de una server action en Vercel). Recibe rutas, no URLs,
+ * y solo acepta las de la carpeta de esta prenda.
+ */
+export async function agregarVideos(articuloId: string, rutas: string[]) {
+  const { supabase } = await exigirAdmin();
+  if (rutas.some((r) => !r.startsWith(`${articuloId}/`))) throw new Error("Ruta de video inválida");
+  const { data, error: errorLectura } = await supabase.from("articulos").select("videos").eq("id", articuloId).single();
+  if (errorLectura) throw new Error(errorLectura.message);
+  const nuevas = rutas.map((r) => supabase.storage.from("fotos").getPublicUrl(r).data.publicUrl);
+  const { error } = await supabase
+    .from("articulos")
+    .update({ videos: [...(data.videos ?? []), ...nuevas], updated_at: new Date().toISOString() })
+    .eq("id", articuloId);
+  if (error) throw new Error(error.message);
   revalidatePath(`/admin/articulo/${articuloId}`);
 }
 
