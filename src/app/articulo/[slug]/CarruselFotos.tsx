@@ -1,34 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Foto from "@/components/Foto";
+import { PISTA, PuntosCarrusel, useCarrusel } from "@/components/carrusel";
 
 /**
- * Fotos de la prenda en carrusel: en el celular se desliza con el dedo (scroll-snap nativo, sin librerías),
+ * Fotos de la prenda en carrusel: en el celular se desliza con el dedo,
  * en el computador se avanza con las flechas o tocando una miniatura.
  */
 export default function CarruselFotos({ fotos, titulo }: { fotos: string[]; titulo: string }) {
-  const pista = useRef<HTMLDivElement>(null);
-  const [actual, setActual] = useState(0);
-
-  useEffect(() => {
-    const el = pista.current;
-    if (!el) return;
-    const alDesplazar = () => setActual(Math.round(el.scrollLeft / el.clientWidth));
-    el.addEventListener("scroll", alDesplazar, { passive: true });
-    return () => el.removeEventListener("scroll", alDesplazar);
-  }, []);
+  const { pista, actual, irA } = useCarrusel();
 
   if (fotos.length <= 1) {
     return (
       <Foto src={fotos[0]} alt={titulo} className="aspect-[4/5] w-full rounded-3xl" sizes="(min-width: 1024px) 600px, 100vw" priority />
     );
   }
-
-  const irA = (i: number) => {
-    const el = pista.current;
-    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
-  };
 
   const flecha =
     "absolute top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-crema/90 text-xl text-cafe shadow-sm transition hover:bg-white lg:flex";
@@ -39,7 +25,7 @@ export default function CarruselFotos({ fotos, titulo }: { fotos: string[]; titu
         <div
           ref={pista}
           tabIndex={0}
-          className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-3xl outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-cafe [&::-webkit-scrollbar]:hidden"
+          className={`${PISTA} rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-cafe`}
         >
           {fotos.map((f, i) => (
             <div key={f} className="w-full shrink-0 snap-center bg-arena" aria-label={`Foto ${i + 1} de ${fotos.length}`}>
@@ -67,11 +53,7 @@ export default function CarruselFotos({ fotos, titulo }: { fotos: string[]; titu
           </button>
         )}
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center gap-1.5 lg:hidden">
-          {fotos.map((f, i) => (
-            <span key={f} className={`h-1.5 rounded-full bg-white shadow transition-all ${i === actual ? "w-4" : "w-1.5 opacity-60"}`} />
-          ))}
-        </div>
+        <PuntosCarrusel total={fotos.length} actual={actual} className="lg:hidden" />
       </div>
 
       <div className="hidden grid-cols-5 gap-3 lg:grid">
