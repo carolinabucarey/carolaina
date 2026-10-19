@@ -104,6 +104,38 @@ async function agregarArchivos(articuloId: string, rutas: string[], campo: "foto
   revalidatePath(`/admin/articulo/${articuloId}`);
 }
 
+export async function ordenarFotos(articuloId: string, urls: string[]) {
+  return ordenarArchivos(articuloId, urls, "fotos");
+}
+
+export async function ordenarVideos(articuloId: string, urls: string[]) {
+  return ordenarArchivos(articuloId, urls, "videos");
+}
+
+/**
+ * Guarda un nuevo orden (la primera foto es la portada). Solo acepta los mismos archivos que ya tiene la prenda.
+ * Devuelve el error en vez de lanzarlo porque en producción Next oculta el mensaje de los errores lanzados.
+ */
+async function ordenarArchivos(articuloId: string, urls: string[], campo: "fotos" | "videos"): Promise<string | null> {
+  const { supabase } = await exigirAdmin();
+  const { data, error: errorLectura } = await supabase
+    .from("articulos")
+    .select(campo)
+    .eq("id", articuloId)
+    .single<Record<string, string[]>>();
+  if (errorLectura) return errorLectura.message;
+  const actuales = data[campo] ?? [];
+  const mismos = urls.length === actuales.length && [...urls].sort().join("\n") === [...actuales].sort().join("\n");
+  if (!mismos) return `Los ${campo} cambiaron mientras los ordenabas. Recarga la página.`;
+  const { error } = await supabase
+    .from("articulos")
+    .update({ [campo]: urls, updated_at: new Date().toISOString() })
+    .eq("id", articuloId);
+  if (error) return error.message;
+  revalidatePath(`/admin/articulo/${articuloId}`);
+  return null;
+}
+
 export async function cambiarEstado(articuloId: string, estado: EstadoArticulo) {
   const { supabase } = await exigirAdmin();
   if (estado === "activo") {
