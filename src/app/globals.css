@@ -19,42 +19,45 @@ body {
   font-family: var(--font-sans);
 }
 
-.boton {
-  @apply inline-flex items-center justify-center rounded-full bg-cafe px-5 py-2.5 text-sm font-medium text-crema transition hover:bg-tinta disabled:cursor-not-allowed disabled:opacity-50;
-}
-.boton-secundario {
-  @apply inline-flex items-center justify-center rounded-full border border-cafe px-5 py-2.5 text-sm font-medium text-cafe transition hover:bg-arena disabled:cursor-not-allowed disabled:opacity-50;
-}
-.campo {
-  @apply w-full rounded-xl border border-lino bg-white px-3 py-2 text-sm outline-none focus:border-cafe focus:ring-2 focus:ring-arena;
-}
+/* En la capa components, para que las utilidades (p. ej. pl-6) puedan sobrescribirlas. */
+@layer components {
+  .boton {
+    @apply inline-flex items-center justify-center rounded-full bg-cafe px-5 py-2.5 text-sm font-medium text-crema transition hover:bg-tinta disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .boton-secundario {
+    @apply inline-flex items-center justify-center rounded-full border border-cafe px-5 py-2.5 text-sm font-medium text-cafe transition hover:bg-arena disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .campo {
+    @apply w-full rounded-xl border border-lino bg-white px-3 py-2 text-sm outline-none focus:border-cafe focus:ring-2 focus:ring-arena;
+  }
 
-/* Páginas de texto: términos, privacidad y preguntas frecuentes */
-.texto-legal {
-  @apply mx-auto max-w-3xl space-y-4 text-[15px] leading-relaxed text-tinta/90;
-}
-.texto-legal h1 {
-  @apply font-serif text-3xl italic text-cafe sm:text-4xl;
-}
-.texto-legal h2 {
-  @apply pt-6 font-serif text-xl text-cafe;
-}
-.texto-legal h3 {
-  @apply pt-2 font-medium text-tinta;
-}
-.texto-legal ul {
-  @apply list-disc space-y-1.5 pl-5;
-}
-.texto-legal ol {
-  @apply list-decimal space-y-1.5 pl-5;
-}
-.texto-legal a {
-  @apply text-rosa underline;
-}
-.texto-legal table {
-  @apply w-full text-left text-sm;
-}
-.texto-legal th,
-.texto-legal td {
-  @apply border-b border-arena py-2 pr-4 align-top;
+  /* Páginas de texto: términos, privacidad y preguntas frecuentes */
+  .texto-legal {
+    @apply mx-auto max-w-3xl space-y-4 text-[15px] leading-relaxed text-tinta/90;
+  }
+  .texto-legal h1 {
+    @apply font-serif text-3xl italic text-cafe sm:text-4xl;
+  }
+  .texto-legal h2 {
+    @apply pt-6 font-serif text-xl text-cafe;
+  }
+  .texto-legal h3 {
+    @apply pt-2 font-medium text-tinta;
+  }
+  .texto-legal ul {
+    @apply list-disc space-y-1.5 pl-5;
+  }
+  .texto-legal ol {
+    @apply list-decimal space-y-1.5 pl-5;
+  }
+  .texto-legal a {
+    @apply text-rosa underline;
+  }
+  .texto-legal table {
+    @apply w-full text-left text-sm;
+  }
+  .texto-legal th,
+  .texto-legal td {
+    @apply border-b border-arena py-2 pr-4 align-top;
+  }
 }
